@@ -11,7 +11,7 @@ docroot = 'base_repo/docs'
 wikiroot = 'new_wiki'
 
 gh_name = os.environ['GITHUB_ACTOR']
-gh_token = os.environ['GH_TOKEN']
+gh_token = os.environ['GITHUB_TOKEN']
 gh_repo = 'https://' + gh_name + ':' + gh_token + '@github.com/' + os.environ['GITHUB_REPOSITORY'] + ".git"
 gh_wiki_repo = 'https://' + gh_name + ':' + gh_token + '@github.com/' + os.environ['GITHUB_REPOSITORY'] + ".wiki.git"
 

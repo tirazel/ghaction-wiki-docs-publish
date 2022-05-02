@@ -4,9 +4,26 @@ import os
 import shutil
 from pathlib import Path
 import re
+import subprocess
+import shutil
 
-docroot = 'docs'
-wikiroot = 'wiki'
+docroot = 'base_repo/docs'
+wikiroot = 'new_wiki'
+
+gh_name = os.environ['GITHUB_ACTOR']
+gh_token = os.environ['GH_TOKEN']
+gh_repo = 'https://' + gh_name + ':' + gh_token + '@github.com/' + os.environ['GITHUB_REPOSITORY'] + ".git"
+gh_wiki_repo = 'https://' + gh_name + ':' + gh_token + '@github.com/' + os.environ['GITHUB_REPOSITORY'] + ".wiki.git"
+
+gh_sha = os.environ['GITHUB_SHA']
+
+os.mkdir(wikiroot)
+
+# Clone the base repo
+subprocess.run(f'git clone {gh_repo} base_repo')
+# Clone the wiki repo
+subprocess.run(f'git clone {gh_wiki_repo} wiki_repo')
+
 
 for filename in os.listdir(wikiroot):
     file_path = os.path.join(wikiroot, filename)

@@ -19,6 +19,12 @@ gh_sha = os.environ['GITHUB_SHA']
 
 os.mkdir(wikiroot)
 
+print(gh_name)
+print(gh_token)
+print(gh_repo)
+print(gh_wiki_repo)
+print(gh_sha)
+
 # Clone the base repo
 subprocess.run(f'git clone {gh_repo} base_repo')
 # Clone the wiki repo

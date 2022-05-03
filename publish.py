@@ -15,7 +15,6 @@ gh_token = os.environ['GH_TOKEN']
 gh_repo = 'https://' + gh_name + '@github.com/' + os.environ['GITHUB_REPOSITORY'] + ".git"
 gh_wiki_repo = 'https://' + gh_name + '@github.com/' + os.environ['GITHUB_REPOSITORY'] + ".wiki.git"
 
-gh_sha = os.environ['GITHUB_SHA']
 
 os.mkdir(wikiroot)
 
@@ -23,13 +22,12 @@ print(gh_name)
 print(gh_token)
 print(gh_repo)
 print(gh_wiki_repo)
-print(gh_sha)
 
 subprocess.run(f'sudo apt-get install git', shell=True)
 
-cmdd = f'/usr/bin/git clone {gh_repo} base_repo'
+cmdd = f'git clone {gh_repo} base_repo'
 print(cmdd)
-cmdd = f'/usr/bin/git clone {gh_wiki_repo} wiki_repo'
+cmdd = f'git clone {gh_wiki_repo} wiki_repo'
 print(cmdd)
 
 # Clone the base repo
@@ -37,16 +35,16 @@ subprocess.run(f'/usr/bin/git clone {gh_repo} base_repo', shell=True)
 # Clone the wiki repo
 subprocess.run(f'/usr/bin/git clone {gh_wiki_repo} wiki_repo', shell=True)
 
-
-for filename in os.listdir(wikiroot):
-    file_path = os.path.join(wikiroot, filename)
-    try:
-        if os.path.isfile(file_path) or os.path.islink(file_path):
-            os.unlink(file_path)
-        elif os.path.isdir(file_path):
-            shutil.rmtree(file_path)
-    except Exception as e:
-        print('Failed to delete %s. Reason: %s' % (file_path, e))
+#
+# for filename in os.listdir(wikiroot):
+#     file_path = os.path.join(wikiroot, filename)
+#     try:
+#         if os.path.isfile(file_path) or os.path.islink(file_path):
+#             os.unlink(file_path)
+#         elif os.path.isdir(file_path):
+#             shutil.rmtree(file_path)
+#     except Exception as e:
+#         print('Failed to delete %s. Reason: %s' % (file_path, e))
 
 
 toc = []
@@ -151,10 +149,13 @@ with open(Path(wikiroot, 'Home.md'), 'w') as outfile:
     outfile.write(tocstring)
 
 # Clean the wiki repo
+print("Clean the wiki repo...")
 subprocess.run(f'rm -rf wiki_repo/*', shell=True)
 # Copy contents to the wiki repo
+print("Copy the files in to the wiki repo...")
 subprocess.run(f'cp wiki/* wiki_repo', shell=True)
 # Commit the wiki repo
-subprocess.run(f'/usr/bin/git add -A -C wiki_repo', shell=True)
-subprocess.run(f'/usr/bin/git commit -m "Github action commit" -C wiki_repo', shell=True)
-subprocess.run(f'/usr/bin/git push -C wiki_repo', shell=True)
+print("Commit the repo...")
+subprocess.run(f'git add -A -C wiki_repo', shell=True)
+subprocess.run(f'git commit -m "Github action commit" -C wiki_repo', shell=True)
+subprocess.run(f'git push -C wiki_repo', shell=True)

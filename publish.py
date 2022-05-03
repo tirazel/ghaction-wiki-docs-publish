@@ -45,6 +45,7 @@ for root, dirs, files in os.walk(docroot):
 
 
 for root, dirs, files in os.walk(docroot):
+    dirs.sort()
     print(f'root: {root}')
 
     depth = str(os.path.relpath(root, docroot)).count('/')

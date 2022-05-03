@@ -148,6 +148,10 @@ with open(Path(wikiroot, '_Footer.md'), 'w') as outfile:
 with open(Path(wikiroot, 'Home.md'), 'w') as outfile:
     outfile.write(tocstring)
 
+print(os.listdir('base_repo'))
+print(os.listdir('wiki_repo'))
+print(os.listdir(wikiroot))
+
 # Clean the wiki repo
 print("Clean the wiki repo...")
 subprocess.run(f'rm -rf wiki_repo/*', shell=True)

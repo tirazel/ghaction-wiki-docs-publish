@@ -149,8 +149,7 @@ with open(Path(wikiroot, 'Home.md'), 'w') as outfile:
     outfile.write(tocstring)
 
 print(os.listdir('base_repo'))
-print(os.listdir('wiki_repo'))
-print(os.listdir(wikiroot))
+
 
 # Clean the wiki repo
 print("Clean the wiki repo...")
@@ -159,7 +158,9 @@ subprocess.run(f'rm -rf wiki_repo/*', shell=True)
 print("Copy the files in to the wiki repo...")
 subprocess.run(f'cp wiki/* wiki_repo', shell=True)
 
+
 print(os.listdir(wikiroot))
+print(os.listdir('wiki_repo'))
 
 # Commit the wiki repo
 print("Commit the repo...")

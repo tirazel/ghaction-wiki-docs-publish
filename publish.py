@@ -145,11 +145,11 @@ print(o.stderr)
 
 # Commit the wiki repo
 print("Commit the repo...")
-# o = subprocess.run(f'git -C "./wiki_repo" add -A', shell=True, capture_output=True)
-# print(o.stdout)
-# print(o.stderr)
+o = subprocess.run(f'git -C "./wiki_repo" add -A', shell=True, capture_output=True)
+print(o.stdout)
+print(o.stderr)
 
-o = subprocess.run(f'git -C "./wiki_repo" commit -am "Github action commit"', shell=True, capture_output=True)
+o = subprocess.run(f'git -C "./wiki_repo" commit -m "Github action commit"', shell=True, capture_output=True)
 print(o.stdout)
 print(o.stderr)
 

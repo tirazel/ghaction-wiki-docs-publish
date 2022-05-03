@@ -164,6 +164,14 @@ print(os.listdir('wiki_repo'))
 
 # Commit the wiki repo
 print("Commit the repo...")
-subprocess.run(f'git add -A -C wiki_repo', shell=True)
-subprocess.run(f'git commit -m "Github action commit" -C wiki_repo', shell=True)
-subprocess.run(f'git push -C wiki_repo', shell=True)
+o = subprocess.run(f'git add -A -C wiki_repo', shell=True, capture_output=True)
+print(o.stdout)
+print(o.stderr)
+
+o = subprocess.run(f'git commit -m "Github action commit" -C wiki_repo', shell=True, capture_output=True)
+print(o.stdout)
+print(o.stderr)
+
+o = subprocess.run(f'git push -C wiki_repo', shell=True, capture_output=True)
+print(o.stdout)
+print(o.stderr)

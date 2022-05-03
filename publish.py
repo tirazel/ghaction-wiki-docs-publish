@@ -29,6 +29,8 @@ subprocess.run(f'sudo apt-get install git', shell=True)
 
 cmdd = f'/usr/bin/git clone {gh_repo} base_repo'
 print(cmdd)
+cmdd = f'/usr/bin/git clone {gh_wiki_repo} wiki_repo'
+print(cmdd)
 
 # Clone the base repo
 subprocess.run(f'/usr/bin/git clone {gh_repo} base_repo', shell=True)

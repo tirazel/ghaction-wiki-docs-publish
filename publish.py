@@ -8,7 +8,7 @@ import subprocess
 import shutil
 
 docroot = 'base_repo/docs'
-wikiroot = 'new_wiki'
+wikiroot = 'wiki'
 
 gh_name = os.environ['GITHUB_ACTOR']
 gh_token = os.environ['GH_TOKEN']
@@ -150,3 +150,11 @@ with open(Path(wikiroot, '_Footer.md'), 'w') as outfile:
 with open(Path(wikiroot, 'Home.md'), 'w') as outfile:
     outfile.write(tocstring)
 
+# Clean the wiki repo
+subprocess.run(f'rm -rf wiki_repo/*', shell=True)
+# Copy contents to the wiki repo
+subprocess.run(f'cp wiki/* wiki_repo', shell=True)
+# Commit the wiki repo
+subprocess.run(f'/usr/bin/git add -A -C wiki_repo', shell=True)
+subprocess.run(f'/usr/bin/git commit -m "Github action commit" -C wiki_repo', shell=True)
+subprocess.run(f'/usr/bin/git push -C wiki_repo', shell=True)

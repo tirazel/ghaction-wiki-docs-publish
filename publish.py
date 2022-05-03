@@ -26,7 +26,7 @@ print(gh_wiki_repo)
 print(gh_sha)
 
 # Clone the base repo
-subprocess.run(f'git clone {gh_repo} base_repo')
+subprocess.run(f'git clone {gh_repo} base_repo', shell=True)
 # Clone the wiki repo
 subprocess.run(f'git clone {gh_wiki_repo} wiki_repo')
 

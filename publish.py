@@ -25,6 +25,9 @@ print(gh_repo)
 print(gh_wiki_repo)
 print(gh_sha)
 
+subprocess.run(f'sudo apt-get install git', shell=True)
+
+
 # Clone the base repo
 subprocess.run(f'git clone {gh_repo} base_repo', shell=True)
 # Clone the wiki repo

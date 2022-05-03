@@ -29,7 +29,7 @@ subprocess.run(f'sudo apt-get install git', shell=True)
 
 
 # Clone the base repo
-subprocess.run(f'git clone {gh_repo} base_repo', shell=True)
+subprocess.run(f'/usr/bin/git clone {gh_repo} base_repo', shell=True)
 # Clone the wiki repo
 subprocess.run(f'git clone {gh_wiki_repo} wiki_repo')
 

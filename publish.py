@@ -69,8 +69,7 @@ for root, dirs, files in os.walk(docroot):
         fixed_path = clean_ordering_numbers_from_path(Path(os.path.relpath(root, docroot), f))
 
         dst_filename = fixed_path.replace('/', '-')
-        title = clean_ordering_numbers_from_path(f)
-        title = title.rsplit('.')[0]
+        title = clean_ordering_numbers_from_path(f).rsplit('.')[0]
 
         path = dst_filename.rsplit('.', 1)[0]
         dst = Path(wikiroot, dst_filename)
@@ -122,10 +121,10 @@ with open(Path(wikiroot, 'Home.md'), 'w') as outfile:
 print(os.listdir('base_repo'))
 
 
-# Clean the wiki repo
+
 print("Clean the wiki repo...")
 subprocess.run(f'rm -rf wiki_repo/*', shell=True)
-# Copy contents to the wiki repo
+
 print("Copy the files in to the wiki repo...")
 subprocess.run(f'cp wiki/* wiki_repo', shell=True)
 

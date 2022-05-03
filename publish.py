@@ -10,17 +10,11 @@ import shutil
 docroot = 'base_repo/docs'
 wikiroot = 'wiki'
 
-gh_name = os.environ['GITHUB_ACTOR']
-gh_token = os.environ['GH_TOKEN']
-gh_repo = 'https://' + gh_name + '@github.com/' + os.environ['GITHUB_REPOSITORY'] + ".git"
-gh_wiki_repo = 'https://' + gh_name + ':' + gh_token + '@github.com/' + os.environ['GITHUB_REPOSITORY'] + ".wiki.git"
+gh_repo = 'https://' + os.environ['GITHUB_ACTOR'] + '@github.com/' + os.environ['GITHUB_REPOSITORY'] + ".git"
+gh_wiki_repo = 'https://' + os.environ['GITHUB_ACTOR'] + ':' + os.environ['GH_TOKEN'] + '@github.com/' + os.environ['GITHUB_REPOSITORY'] + ".wiki.git"
 
+# Create working directory
 os.mkdir(wikiroot)
-
-cmdd = f'git clone {gh_repo} base_repo'
-print(cmdd)
-cmdd = f'git clone {gh_wiki_repo} wiki_repo'
-print(cmdd)
 
 # Clone the base repo
 subprocess.run(f'/usr/bin/git clone {gh_repo} base_repo', shell=True)
@@ -41,12 +35,7 @@ def clean_ordering_numbers_from_path(arg):
     return fixed_path
 
 for root, dirs, files in os.walk(docroot):
-    print(f'root: {root}')
-
-
-for root, dirs, files in os.walk(docroot):
     dirs.sort()
-    print(f'root: {root}')
 
     depth = str(os.path.relpath(root, docroot)).count('/')
     dir_title = clean_ordering_numbers_from_path(os.path.relpath(root, docroot).split('/')[-1].replace('_', ' '))
@@ -63,18 +52,15 @@ for root, dirs, files in os.walk(docroot):
 
         src = Path(root, f)
 
-        print("src: " + str(src))
-
         fixed_path = clean_ordering_numbers_from_path(Path(os.path.relpath(root, docroot), f))
 
         dst_filename = fixed_path.replace('/', '-')
         title = clean_ordering_numbers_from_path(f).rsplit('.')[0]
 
         path = dst_filename.rsplit('.', 1)[0]
-        dst = Path(wikiroot, dst_filename)
 
-        print("dst: " + str(dst))
-        shutil.copy(src, dst)
+
+        shutil.copy(src, Path(wikiroot, dst_filename))
 
         skip_files = ['Home.md', '_Footer.md', '_Sidebar.md', 'index.md']
 
@@ -89,8 +75,6 @@ for root, dirs, files in os.walk(docroot):
                     print(title)
 
         toc.append({'depth': depth, 'title': title, 'path': path, 'is_dir': False})
-
-print(toc)
 
 tocstring = ''
 
@@ -117,41 +101,16 @@ with open(Path(wikiroot, '_Footer.md'), 'w') as outfile:
 with open(Path(wikiroot, 'Home.md'), 'w') as outfile:
     outfile.write(tocstring)
 
-print(os.listdir('base_repo'))
-
-
-
 print("Clean the wiki repo...")
 subprocess.run(f'rm -rf wiki_repo/*', shell=True)
 
 print("Copy the files in to the wiki repo...")
 subprocess.run(f'cp wiki/* wiki_repo', shell=True)
 
-
-print(os.listdir(wikiroot))
-print(os.listdir('wiki_repo'))
-
-
-o = subprocess.run(f'git config --global user.name "Github Actions"', shell=True, capture_output=True)
-print(o.stdout)
-print(o.stderr)
-
-o = subprocess.run(f'git config --global user.email actions@github.com', shell=True, capture_output=True)
-print(o.stdout)
-print(o.stderr)
-
-
-
 # Commit the wiki repo
-print("Commit the repo...")
-o = subprocess.run(f'git -C "./wiki_repo" add -A', shell=True, capture_output=True)
-print(o.stdout)
-print(o.stderr)
-
-o = subprocess.run(f'git -C "./wiki_repo" commit -m "Github action commit"', shell=True, capture_output=True)
-print(o.stdout)
-print(o.stderr)
-
-o = subprocess.run(f'git -C "./wiki_repo" push ', shell=True, capture_output=True)
-print(o.stdout)
-print(o.stderr)
+print("Commit the updates...")
+subprocess.run(f'git config --global user.name "Github Actions"', shell=True, capture_output=True)
+subprocess.run(f'git config --global user.email actions@github.com', shell=True, capture_output=True)
+subprocess.run(f'git -C "./wiki_repo" add -A', shell=True, capture_output=True)
+subprocess.run(f'git -C "./wiki_repo" commit -m "Github action commit"', shell=True, capture_output=True)
+subprocess.run(f'git -C "./wiki_repo" push ', shell=True, capture_output=True)

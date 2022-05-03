@@ -18,12 +18,8 @@ gh_wiki_repo = 'https://' + gh_name + ':' + gh_token + '@github.com/' + os.envir
 
 os.mkdir(wikiroot)
 
-print(gh_name)
-print(gh_token)
-print(gh_repo)
-print(gh_wiki_repo)
 
-subprocess.run(f'sudo apt-get install git', shell=True)
+#subprocess.run(f'sudo apt-get install git', shell=True)
 
 cmdd = f'git clone {gh_repo} base_repo'
 print(cmdd)
@@ -34,17 +30,6 @@ print(cmdd)
 subprocess.run(f'/usr/bin/git clone {gh_repo} base_repo', shell=True)
 # Clone the wiki repo
 subprocess.run(f'/usr/bin/git clone {gh_wiki_repo} wiki_repo', shell=True)
-
-#
-# for filename in os.listdir(wikiroot):
-#     file_path = os.path.join(wikiroot, filename)
-#     try:
-#         if os.path.isfile(file_path) or os.path.islink(file_path):
-#             os.unlink(file_path)
-#         elif os.path.isdir(file_path):
-#             shutil.rmtree(file_path)
-#     except Exception as e:
-#         print('Failed to delete %s. Reason: %s' % (file_path, e))
 
 
 toc = []
@@ -98,17 +83,22 @@ for root, dirs, files in os.walk(docroot):
         print("dst: " + str(dst))
         shutil.copy(src, dst)
 
-        if str(f) == 'Home.md':
+        skip_files = ['Home.md', '_Footer.md', '_Sidebar.md', 'index.md']
+
+        if str(f) in skip_files:
             continue
 
-        if str(f) == '_Footer.md':
-            continue
-
-        if str(f) == '_Sidebar.md':
-            continue
-
-        if str(f) == 'index.md':
-            continue
+        # if str(f) == 'Home.md':
+        #     continue
+        #
+        # if str(f) == '_Footer.md':
+        #     continue
+        #
+        # if str(f) == '_Sidebar.md':
+        #     continue
+        #
+        # if str(f) == 'index.md':
+        #     continue
 
         with open(src) as infile:
             firstline = infile.readline()

@@ -158,6 +158,9 @@ subprocess.run(f'rm -rf wiki_repo/*', shell=True)
 # Copy contents to the wiki repo
 print("Copy the files in to the wiki repo...")
 subprocess.run(f'cp wiki/* wiki_repo', shell=True)
+
+print(os.listdir(wikiroot))
+
 # Commit the wiki repo
 print("Commit the repo...")
 subprocess.run(f'git add -A -C wiki_repo', shell=True)

@@ -40,21 +40,20 @@ def clean_ordering_numbers_from_path(arg):
     print(f'Fixed: {fixed_path}')
     return fixed_path
 
+for root, dirs, files in os.walk(docroot):
+    print(f'root: {root}')
+
 
 for root, dirs, files in os.walk(docroot):
-    #print(os.path.relpath(root, docroot))
+    dirs.sort()
     print(f'root: {root}')
-    #print(dirs)
 
     depth = str(os.path.relpath(root, docroot)).count('/')
     dir_title = clean_ordering_numbers_from_path(os.path.relpath(root, docroot).split('/')[-1].replace('_', ' '))
     dir_path = None
 
     if(os.path.exists(Path(root, 'index.md'))):
-        print('index found')
-
         dir_path = clean_ordering_numbers_from_path(Path(os.path.relpath(root, docroot), 'index.md')).replace('/', '-').rsplit('.', 1)[0]
-
 
     if dir_title != '.':
         toc.append({'depth': depth, 'title': dir_title, 'path': dir_path, 'is_dir': True})

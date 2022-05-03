@@ -162,8 +162,6 @@ subprocess.run(f'cp wiki/* wiki_repo', shell=True)
 print(os.listdir(wikiroot))
 print(os.listdir('wiki_repo'))
 
-git config --local user.email "$(git log -1 --format='%ae')"
-
 
 o = subprocess.run(f'git config --global user.name githubactions', shell=True, capture_output=True)
 print(o.stdout)

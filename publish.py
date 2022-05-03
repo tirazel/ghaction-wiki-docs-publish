@@ -59,7 +59,7 @@ for root, dirs, files in os.walk(docroot):
     if dir_title != '.':
         toc.append({'depth': depth, 'title': dir_title, 'path': dir_path, 'is_dir': True})
 
-    for f in files:
+    for f in sorted(files):
         depth = str(Path(os.path.relpath(root, docroot), f)).count('/')
 
         src = Path(root, f)

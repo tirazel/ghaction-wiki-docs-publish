@@ -15,11 +15,7 @@ gh_token = os.environ['GH_TOKEN']
 gh_repo = 'https://' + gh_name + '@github.com/' + os.environ['GITHUB_REPOSITORY'] + ".git"
 gh_wiki_repo = 'https://' + gh_name + ':' + gh_token + '@github.com/' + os.environ['GITHUB_REPOSITORY'] + ".wiki.git"
 
-
 os.mkdir(wikiroot)
-
-
-#subprocess.run(f'sudo apt-get install git', shell=True)
 
 cmdd = f'git clone {gh_repo} base_repo'
 print(cmdd)
@@ -30,7 +26,6 @@ print(cmdd)
 subprocess.run(f'/usr/bin/git clone {gh_repo} base_repo', shell=True)
 # Clone the wiki repo
 subprocess.run(f'/usr/bin/git clone {gh_wiki_repo} wiki_repo', shell=True)
-
 
 toc = []
 
@@ -88,26 +83,12 @@ for root, dirs, files in os.walk(docroot):
         if str(f) in skip_files:
             continue
 
-        # if str(f) == 'Home.md':
-        #     continue
-        #
-        # if str(f) == '_Footer.md':
-        #     continue
-        #
-        # if str(f) == '_Sidebar.md':
-        #     continue
-        #
-        # if str(f) == 'index.md':
-        #     continue
-
         with open(src) as infile:
             firstline = infile.readline()
             if len(firstline) > 0:
                 if firstline[0] == '#':
                     title = firstline[1:].strip()
                     print(title)
-
-
 
         toc.append({'depth': depth, 'title': title, 'path': path, 'is_dir': False})
 
@@ -153,11 +134,11 @@ print(os.listdir(wikiroot))
 print(os.listdir('wiki_repo'))
 
 
-o = subprocess.run(f'git config --global user.name githubactions', shell=True, capture_output=True)
+o = subprocess.run(f'git config --global user.name "Github Actions"', shell=True, capture_output=True)
 print(o.stdout)
 print(o.stderr)
 
-o = subprocess.run(f'git config --global user.email githubactions@github.com', shell=True, capture_output=True)
+o = subprocess.run(f'git config --global user.email actions@github.com', shell=True, capture_output=True)
 print(o.stdout)
 print(o.stderr)
 
@@ -165,11 +146,11 @@ print(o.stderr)
 
 # Commit the wiki repo
 print("Commit the repo...")
-o = subprocess.run(f'git -C "./wiki_repo" add -A', shell=True, capture_output=True)
-print(o.stdout)
-print(o.stderr)
+# o = subprocess.run(f'git -C "./wiki_repo" add -A', shell=True, capture_output=True)
+# print(o.stdout)
+# print(o.stderr)
 
-o = subprocess.run(f'git -C "./wiki_repo" commit -m "Github action commit"', shell=True, capture_output=True)
+o = subprocess.run(f'git -C "./wiki_repo" commit -am "Github action commit"', shell=True, capture_output=True)
 print(o.stdout)
 print(o.stderr)
 
